@@ -37,7 +37,7 @@ I'd like to become moderately proficient in the following skills:
   - A 128x32 OLED for basic state information
   - A web dashboard
 ## Hardware Objectives
-- Dynamic models of:
+- Dynamic models:
   - An air break switch (from the transformer low-side)
     - Three phase operated by a single servo with limit switches to confirm close position
   - Capacitor bank switch
@@ -49,8 +49,25 @@ I'd like to become moderately proficient in the following skills:
     - Some sort of rapid-open mechanism
   - Transfer bus tie
   - Distribution recloser
-- 
+- Static Models:
+  - Realistic structures supporting the aforementioned dynamic models
+  - Perforated metal baseplate to serve as the network ground
+  - Visually interesting load elements for each phase
+  - Visible and audible indicators  of system state and state changes
+    - For example, a strobing LED and buzzer when an element is being energized
+# Safety
+Few things are more critical than safe operation of the model. The hazards presented in the construction and operation
+are primarily as follows:
+- Fire
+- Electric Shock
+- Toxic or otherwise noxious vapors
+- Burns
 
+To mitigate risks of fire and electric shock the system will operate on a fused 12V DC circuit with a 10A DC circuit breaker
+and be physically isolated from mains voltage when unattended.
+To mitigate risks of noxious vapor inhalation, soldering will be performed either outside, or in proximity to an open window
+with a fan actively circulating area through the workspace. To mitigate risks of burns, work gloves will be used when utilizing
+the soldering iron.
 
 
 
