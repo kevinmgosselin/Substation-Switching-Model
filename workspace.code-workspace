@@ -1,8 +1,7 @@
 {
 	"folders": [
 		{
-			"name": "Hello_Hardware",
-			"path": "Hello_Hardware"
+			"path": "firmware/Hello_Hardware"
 		}
 	]
 }
