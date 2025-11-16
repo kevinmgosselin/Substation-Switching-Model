@@ -5,3 +5,4 @@
 | 10NOV2025 | 1720-1820 | Procured soldering iron |
 | 11NOV2025 | 1800-1900 | Created basic file structure and completed majority of project charter |
 | 12NOV2025 | 1825-1945 | Finished project charter; created Progress Log; Initialized Github Repo in VSCode |
+| 16NOV2025 | 1125-1250 | Completed "Hello_Hardware" w/ blinking LED, researched soldering, placed order for needs |
