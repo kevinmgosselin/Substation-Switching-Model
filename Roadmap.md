@@ -6,8 +6,11 @@
 
 ### Week 2 – Power, safety, measurement
 - Assemble 12 V supply with fuse + E-stop + distribution bus.
+- Test limit switch control with ISR and semaphore
+ - Solder two limit switches
+ - Create an LED toggle
+ - Create forward and reverse logic and limit switch stops for a servo
 - Breadboard INA219 reading feeder current; print to serial + LCD.
-- Define data structures for Segments, Switches, Sensors.
 
 ### Week 3 – First visible switch
 - CAD & 3D-print a servo mount + knife-switch lookalike (simple, sturdy). Add two limit switches.
