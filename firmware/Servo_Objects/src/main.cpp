@@ -1,54 +1,49 @@
 #include <Arduino.h>
 
-#define LED_PIN 23
-#define SWITCH_PIN 18
+#define ledPin 4
+#define switchPin 5
+#define queueSize 5
 
-TaskHandle_t BlinkTaskHandle = NULL;
+QueueHandle_t switchQueue = NULL;
 
-volatile bool taskSuspended = false;
-volatile uint32_t lastInterruptTime = 0;
-const uint32_t debounceDelay = 100;
-
-void IRAM_ATTR buttonISR(){
-  uint32_t currentTime = millis();
-  if(currentTime - lastInterruptTime < debounceDelay){
-    return;
-  }
-  lastInterruptTime = currentTime;
-
-  taskSuspended = !taskSuspended;
-  if (taskSuspended){
-    vTaskSuspend(BlinkTaskHandle);
-    Serial.println("Blink Suspended");
-  }
-  else{
-    vTaskResume(BlinkTaskHandle);
-    Serial.println("Blink Resumed");
-  }
-
-
-}
-
-void BlinkTask(void *parameter){
+void queueTask(void *parameter){
   for(;;){
-    digitalWrite(LED_PIN, HIGH);
-    Serial.println("BlinkTask: LED ON");
-    vTaskDelay(1000/portTICK_PERIOD_MS);
-    digitalWrite(LED_PIN, LOW);
-    Serial.println("BlinkTask: LED OFF");
-    vTaskDelay(1000/portTICK_PERIOD_MS);
-    Serial.print("BlinkTask running on core ");
-    Serial.println(xPortGetCoreID());
+    int switchState = digitalRead(switchPin);
+    xQueueSend(switchQueue, &switchState, portMAX_DELAY);
+    Serial.printf("switchTask: Sent switch state %d\n", switchState);
+    vTaskDelay(10/portTICK_RATE_MS);
   }
 }
 
-void setup() {
-  // put your setup code here, to run once:
-  Serial.begin(115200);
-  pinMode(LED_PIN, OUTPUT);
-  pinMode(SWITCH_PIN, INPUT_PULLUP);
-
-  attachInterrupt(digitalPinToInterrupt(SWITCH_PIN), buttonISR, FALLING);
-  xTaskCreatePinnedToCore(BlinkTask, "BlinkTask", 10000, NULL, 1, &BlinkTaskHandle, 1);
+void ledTask(void *parameter){
+  for(;;){
+    int switchState;
+    if (xQueueReceive(switchQueue, &switchState, portMAX_DELAY))
+    if (switchState){
+      digitalWrite(ledPin, HIGH);
+    }
+    else{
+      digitalWrite(ledPin, LOW);
+    }
+  }
 }
-void loop() {}
+
+void setup(){
+  Serial.begin(115200);
+  pinMode(ledPin, OUTPUT);
+  pinMode(switchPin, INPUT_PULLUP);
+
+  switchQueue = xQueueCreate(queueSize, sizeof(int));
+  if (switchQueue == NULL){
+    Serial.println("Failed to create queue!");
+    while(1);
+  }
+
+  xTaskCreatePinnedToCore(queueTask, "queueTask", 3000, NULL, 1, NULL, 1);
+  xTaskCreatePinnedToCore(ledTask, "ledTask", 3000, NULL, 1, NULL, 1);
+}
+
+void loop(){
+
+}
+
