@@ -8,3 +8,4 @@
 | 16NOV2025 | 1125-1250 | Completed "Hello_Hardware" w/ blinking LED, researched soldering, placed orders |
 | 18NOV2025 | 1810-1940 | Tested Servo and other hardware, test FreeRTOC and LED w/Switch |
 | 19NOV2025 | 1820-2000 | Soldered wires for two limit switches, tested FreeRTOS queues on a limit switch and LED |
+| 21NOV2025 | 1805-1905 | Programmed fade on/off LED with two limit switches for stop control |
