@@ -1,46 +1,55 @@
 #include <Arduino.h>
 
 #define ledPin 4
-#define switchPin 5
+#define switchPinFwd 5
+#define switchPinBack 21
 #define queueSize 5
 
-QueueHandle_t switchQueue = NULL;
+QueueHandle_t switchCommand;
 
-void queueTask(void *parameter){
+typedef enum {
+  OPEN,
+  CLOSE
+} State;
+
+State sysState = OPEN;
+
+void ledTask(void *parameter){
+  int dutyCycle = 0;
   for(;;){
-    int switchState = digitalRead(switchPin);
-    xQueueSend(switchQueue, &switchState, portMAX_DELAY);
-    Serial.printf("switchTask: Sent switch state %d\n", switchState);
-    vTaskDelay(10/portTICK_RATE_MS);
+    int switchStateFwd = digitalRead(switchPinFwd);
+    int switchStateBack = digitalRead(switchPinBack);
+    if (switchStateFwd == 0 && sysState == OPEN && dutyCycle <= 255){
+      dutyCycle++;
+    }
+    if (switchStateBack == 0 && sysState == CLOSE && dutyCycle > 0){
+      dutyCycle--;
+    }
+    analogWrite(ledPin, dutyCycle);
+    vTaskDelay(100/portTICK_PERIOD_MS);
+    Serial.println(dutyCycle);
+    //Serial.printf("Forward Switch: %u\nBack Switch: %u", switchStateFwd, switchStateBack);q
+    //Serial.println(switchStateBack);
   }
 }
 
-void ledTask(void *parameter){
+void stateSwitcher(void *parameter){
   for(;;){
-    int switchState;
-    if (xQueueReceive(switchQueue, &switchState, portMAX_DELAY))
-    if (switchState){
-      digitalWrite(ledPin, HIGH);
-    }
-    else{
-      digitalWrite(ledPin, LOW);
-    }
+    sysState = OPEN;
+    vTaskDelay(10000/portTICK_PERIOD_MS);
+    sysState = CLOSE;
+    vTaskDelay(10000/portTICK_PERIOD_MS);
   }
 }
 
 void setup(){
   Serial.begin(115200);
   pinMode(ledPin, OUTPUT);
-  pinMode(switchPin, INPUT_PULLUP);
+  pinMode(switchPinFwd, INPUT_PULLUP);
+  pinMode(switchPinBack, INPUT_PULLUP);
 
-  switchQueue = xQueueCreate(queueSize, sizeof(int));
-  if (switchQueue == NULL){
-    Serial.println("Failed to create queue!");
-    while(1);
-  }
-
-  xTaskCreatePinnedToCore(queueTask, "queueTask", 3000, NULL, 1, NULL, 1);
   xTaskCreatePinnedToCore(ledTask, "ledTask", 3000, NULL, 1, NULL, 1);
+  xTaskCreatePinnedToCore(stateSwitcher, "stateSwitcher", 3000, NULL, 1, NULL, 1);
 }
 
 void loop(){
