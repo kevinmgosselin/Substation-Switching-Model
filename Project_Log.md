@@ -9,3 +9,4 @@
 | 18NOV2025 | 1810-1940 | Tested Servo and other hardware, test FreeRTOC and LED w/Switch |
 | 19NOV2025 | 1820-2000 | Soldered wires for two limit switches, tested FreeRTOS queues on a limit switch and LED |
 | 21NOV2025 | 1805-1905 | Programmed fade on/off LED with two limit switches for stop control |
+| 22NOV2025 | 1315-1435 | Tested ACS712; requires further debugging |
