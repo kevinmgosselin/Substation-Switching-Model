@@ -12,3 +12,4 @@
 | 22NOV2025 | 1315-1435 | Tested ACS712; requires further debugging |
 | 23NOV2025 | 0955-1105 | Troubleshooted ACS712; started on servo arm and Knife assembly |
 | 23NOV2025 | 1320-1420 | Continued Switch Pole designing |
+| 25NOV2025 | 1815-1850 | Minor Switch Pole Modifications; Sent S.P.v2 to print |
