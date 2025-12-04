@@ -14,4 +14,5 @@
 | 23NOV2025 | 1320-1420 | Continued Switch Pole designing |
 | 25NOV2025 | 1815-1850 | Minor Switch Pole Modifications; Sent S.P.v2 to print |
 | 01DEC2025 | 1300-1400 | S.P., - Adjusted screw sizes w/ other minor modifications; printed, assmb, tested |
-| 25NOV2025 | 1810-1910 | S.P., - Added mount brackets for limit switches; printed |
+| 02DEC2025 | 1810-1910 | S.P., - Added mount brackets for limit switches; printed |
+| 03DEC2025 | 1805-1910 | Assembled & Wired Switch Pole, drafted code; requires debugging, close switch not recognized |
