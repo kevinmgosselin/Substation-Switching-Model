@@ -16,3 +16,4 @@
 | 01DEC2025 | 1300-1400 | S.P., - Adjusted screw sizes w/ other minor modifications; printed, assmb, tested |
 | 02DEC2025 | 1810-1910 | S.P., - Added mount brackets for limit switches; printed |
 | 03DEC2025 | 1805-1910 | Assembled & Wired Switch Pole, drafted code; requires debugging, close switch not recognized |
+| 04DEC2025 | 1600-1630 | Troubleshot Switch Pole, reached operational state though physical model requires refining |
