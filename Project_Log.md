@@ -19,3 +19,4 @@
 | 04DEC2025 | 1600-1630 | Troubleshot Switch Pole, reached operational state though physical model requires refining |
 | 05DEC2025 | 1610-1740 | Refined Switch Pole Model, printed, reassembled; added current sensor input to Servo_2switches |
 | 06DEC2025 | 1600-1800 | Watched I2 KiCAD; Soldered switch pole model w/ ACS 712, requires cnxn+organization |
+| 07DEC2025 | 0840-1140 | Switch pole model cnxd+organized; script debugging, requires LED and trip logic |
