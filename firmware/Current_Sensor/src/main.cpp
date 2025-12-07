@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#define sensorPin 35
+#define sensorPin 33
 
 const float vRef = 3.3;
 const float adcResolution = 4095;

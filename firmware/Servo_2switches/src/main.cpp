@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include <ESP32Servo.h>
 
-#define switchOpenPin 13
+#define switchOpenPin 15
 #define switchClosePin 4
-#define sensorPin 35
+#define sensorPin 33
 
 const float vRef = 3.3;
 const float adcResolution = 4095;
@@ -11,9 +11,9 @@ const float zeroPoint = 1.67;
 const float dividerRatio = 0.6667; // Divider Ratio for a 1k + 2k Ohm V. Div.
 const float sensitivity = 0.100 * dividerRatio;
 
-static const int servoPin = 5;
+static const int servoPin = 13;
 
-float current = 0;
+volatile float current = 0;
 
 Servo servo;
 
@@ -35,7 +35,7 @@ void sensorRead(void *parameter){
     float pinVoltage = avgPin_mV/1000;
     current = (pinVoltage - zeroPoint)/sensitivity;
 
-    Serial.printf("Current: %f\n",current);
+    //Serial.printf("Current: %f\n",current);
     vTaskDelay(100/portTICK_PERIOD_MS);
   }
 }
@@ -52,23 +52,23 @@ void servoTask(void *parameter){
       posDegrees--;
     }
     servo.write(posDegrees);
-    vTaskDelay(10/portTICK_PERIOD_MS);
+    vTaskDelay(100/portTICK_PERIOD_MS);
     Serial.printf("OpenSwitch: %u\n", switchStateOpen);
     Serial.printf("CloseSwitch: %u\n", switchStateClose);
-    Serial.println(posDegrees);
+    //Serial.println(posDegrees);
   }
 }
 
 void stateSwitcher(void *parameter){
   for(;;){
-    if (current > 0.3){ // For 5v and 10 ohm resistor
+    if (current < 0){ // For 5v and 10 ohm resistor
       sysState = OPEN;
     }
     else{
       sysState = CLOSE;
     }
     vTaskDelay(100/portTICK_PERIOD_MS);
-    Serial.printf("System State: %s\n", sysState);
+    //Serial.printf("System State: %s\n", sysState == OPEN ? "OPEN" : "CLOSE");
   }
 }
 
